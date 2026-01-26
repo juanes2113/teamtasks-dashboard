@@ -7,4 +7,9 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\3. TeamTasks.Domain\3. TeamTasks.Domain.csproj" />
+    <ProjectReference Include="..\4. TeamTasks.Infrastructure\4. TeamTasks.Infrastructure.csproj" />
+  </ItemGroup>
+
 </Project>
