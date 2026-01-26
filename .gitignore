@@ -1,0 +1,16 @@
+# Archivos de Visual Studio
+.vs/
+*.user
+*.suo
+*.cache
+*.log
+*.db
+*.sqlite
+
+# Archivos de compilación
+bin/
+obj/
+
+# Archivos de configuración
+*.config
+*.bak
