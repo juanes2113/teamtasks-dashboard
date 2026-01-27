@@ -7,7 +7,6 @@ namespace _4._TeamTasks.Infrastructure.Repositories
     public class Repository<T> : IRepository<T> where T : class
     {
         private readonly TeamTasksDbContext _context;
-
         public Repository(TeamTasksDbContext context)
         {
             _context = context;

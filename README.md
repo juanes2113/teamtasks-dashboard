@@ -1,4 +1,62 @@
-# teamtasks-dashboard
+﻿# teamtasks-dashboard
 Technical test
 
 dotnet ef dbcontext scaffold "Host=localhost;Port=5433;Database=TeamTasks;Username=postgres;Password=cancelado88" Npgsql.EntityFrameworkCore.PostgreSQL --project "4. TeamTasks.Infrastructure/4. TeamTasks.Infrastructure.csproj" --startup-project "1. TeamTasks.API/1. TeamTasks.API.csproj" --context TeamTasksDbContext --output-dir Entities --no-onconfiguring --force
+
+TeamTasksDashboard
+│
+├── 1. TeamTasks.API
+│   │
+│   ├── Connected Services
+│   ├── Dependencias
+│   ├── Properties
+│   │
+│   ├── Controllers
+│   │   └── (Controllers de la API REST)
+│   │
+│   ├── TeamTasks.API.http
+│   ├── appsettings.json
+│   ├── Program.cs
+│   └── WeatherForecast.cs
+│
+├── 2. TeamTasks.Application
+│   │
+│   ├── Dependencias
+│   │
+│   ├── Interfaces
+│   │   └── (Contratos de servicios / casos de uso)
+│   │
+│   ├── Services
+│   │   └── (Lógica de negocio / casos de uso)
+│   │
+│   └── ServiceCollection.cs
+│
+├── 3. TeamTasks.Domain
+│   │
+│   ├── Dependencias
+│   │
+│   ├── Enums
+│   │   └── (Estados, tipos, prioridades, etc.)
+│   │
+│   ├── Interfaces
+│   │   └── (Contratos de repositorios)
+│   │
+│   └── Models
+│       └── (Entidades de dominio: Project, Task, Developer, etc.)
+│
+├── 4. TeamTasks.Infrastructure
+│   │
+│   ├── Dependencias
+│   │
+│   ├── Data
+│   │   └── TeamTasksDbContext.cs
+│   │
+│   ├── Repositories
+│   │   └── (Implementaciones de repositorios)
+│   │
+│   └── ServiceCollection.cs
+│
+└── 5. TeamTasks.Test
+    │
+    ├── Dependencias
+    └── (Pruebas unitarias / integración)

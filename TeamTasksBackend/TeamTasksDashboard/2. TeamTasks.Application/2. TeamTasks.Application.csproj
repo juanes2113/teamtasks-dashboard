@@ -8,6 +8,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.1" />
+    <PackageReference Include="FluentValidation" Version="12.1.1" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\3. TeamTasks.Domain\3. TeamTasks.Domain.csproj" />
     <ProjectReference Include="..\4. TeamTasks.Infrastructure\4. TeamTasks.Infrastructure.csproj" />
   </ItemGroup>

@@ -1,4 +1,5 @@
-﻿using _4._TeamTasks.Infrastructure.Repositories;
+﻿using Request.Infrastructure.Persistence.Mappings;
+using _4._TeamTasks.Infrastructure.Repositories;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Configuration;
 using _4._TeamTasks.Infrastructure.Data;
@@ -17,7 +18,10 @@ namespace _4._TeamTasks.Infrastructure
                 )
             );
 
+            services.AddAutoMapper(typeof(AutoMapperProfile));
+
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+            services.AddScoped<IDeveloperRepository, DeveloperRepository>();
 
             return services;
         }
