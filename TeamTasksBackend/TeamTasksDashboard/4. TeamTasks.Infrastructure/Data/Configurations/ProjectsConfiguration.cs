@@ -21,6 +21,7 @@ namespace _4._TeamTasks.Infrastructure.Data.Configurations
                 .HasMaxLength(150)
                 .HasColumnName("name");
             entity.Property(e => e.Startdate).HasColumnName("startdate");
+            entity.Property(e => e.Status).HasColumnName("status");
         }
     }
 }

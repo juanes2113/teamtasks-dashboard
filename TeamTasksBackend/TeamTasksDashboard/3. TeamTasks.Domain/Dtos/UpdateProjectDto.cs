@@ -1,6 +1,6 @@
-﻿namespace _3._TeamTasks.Domain.Models
+﻿namespace _3._TeamTasks.Domain.Dtos
 {
-    public partial class Project
+    public class UpdateProjectDto
     {
         public int Projectid { get; set; }
         public string Name { get; set; } = null!;
@@ -8,6 +8,5 @@
         public DateOnly Startdate { get; set; }
         public DateOnly? Enddate { get; set; }
         public int Status { get; set; }
-        public virtual ICollection<ProjectTask> ProjectTasks { get; set; } = new List<ProjectTask>();
     }
 }

@@ -1,7 +1,7 @@
 ﻿using _3._TeamTasks.Domain.Dtos;
 using FluentValidation;
 
-namespace _3._TeamTasks.Domain.Validators
+namespace _2._TeamTasks.Application.Validators
 {
     public class CreateDeveloperDtoValidator : AbstractValidator<CreateDeveloperDto>
     {

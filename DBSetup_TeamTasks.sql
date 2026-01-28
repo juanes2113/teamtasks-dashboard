@@ -2,12 +2,6 @@
 
 CREATE DATABASE "TeamTasks";
 
--- Create enums
-
-CREATE TYPE project_status AS ENUM ('Planned', 'InProgress', 'Completed');
-CREATE TYPE task_status AS ENUM ('ToDo', 'InProgress', 'Blocked', 'Completed');
-CREATE TYPE task_priority AS ENUM ('Low', 'Medium', 'High');
-
 -- Create tables
 
 CREATE TABLE Developers (
@@ -25,7 +19,7 @@ CREATE TABLE Projects (
     ClientName VARCHAR(150) NOT NULL,
     StartDate DATE NOT NULL,
     EndDate DATE,
-    Status project_status NOT NULL
+    Status INT NOT NULL
 );
 
 
@@ -35,8 +29,8 @@ CREATE TABLE Tasks (
     Title VARCHAR(200) NOT NULL,
     Description TEXT,
     AssigneeId INT NOT NULL,
-    Status task_status NOT NULL,
-    Priority task_priority NOT NULL,
+    Status INT NOT NULL,
+    Priority INT NOT NULL,
     EstimatedComplexity INT CHECK (EstimatedComplexity BETWEEN 1 AND 5),
     DueDate DATE NOT NULL,
     CompletionDate DATE,
@@ -58,20 +52,20 @@ VALUES
 
 INSERT INTO Projects (Name, ClientName, StartDate, EndDate, Status)
 VALUES
-('Website Redesign', 'ACME Corp', '2025-01-01', '2025-03-31', 'InProgress'),
-('Mobile App', 'Globex', '2025-02-01', '2025-05-30', 'Planned'),
-('Internal Tool', 'InHouse', '2024-12-01', '2025-02-28', 'Completed');
+('Website Redesign', 'ACME Corp', '2025-01-01', '2025-03-31', 2),
+('Mobile App', 'Globex', '2025-02-01', '2025-05-30', 1),
+('Internal Tool', 'InHouse', '2024-12-01', '2025-02-28', 3);
 
 INSERT INTO Tasks
 (ProjectId, Title, Description, AssigneeId, Status, Priority, EstimatedComplexity, DueDate, CompletionDate)
 SELECT
-    (random()*2 + 1)::int,
+    (random() * 2 + 1)::int,
     'Task #' || gs,
     'Sample task description',
-    (random()*4 + 1)::int,
-    (ARRAY['ToDo','InProgress','Blocked','Completed'])[floor(random()*4)+1]::task_status,
-    (ARRAY['Low','Medium','High'])[floor(random()*3)+1]::task_priority,
-    (random()*4 + 1)::int,
+    (random() * 4 + 1)::int,
+    (random() * 4 + 1)::int,
+    (random() * 3 + 1)::int,
+    (random() * 4 + 1)::int,
     CURRENT_DATE + (random()*15)::int,
     CASE WHEN random() > 0.5 THEN CURRENT_DATE ELSE NULL END
 FROM generate_series(1,20) gs;
@@ -82,8 +76,8 @@ FROM generate_series(1,20) gs;
 
 SELECT
     d.FirstName || ' ' || d.LastName AS DeveloperName,
-    COUNT(t.TaskId) FILTER (WHERE t.Status <> 'Completed') AS OpenTasksCount,
-    AVG(t.EstimatedComplexity) FILTER (WHERE t.Status <> 'Completed') AS AverageEstimatedComplexity
+    COUNT(t.TaskId) FILTER (WHERE t.Status <> 3) AS OpenTasksCount,
+    AVG(t.EstimatedComplexity) FILTER (WHERE t.Status <> 3) AS AverageEstimatedComplexity
 FROM Developers d
 LEFT JOIN Tasks t ON d.DeveloperId = t.AssigneeId
 WHERE d.IsActive = TRUE
@@ -94,8 +88,8 @@ GROUP BY d.DeveloperId;
 SELECT
     p.Name AS ProjectName,
     COUNT(t.TaskId) AS TotalTasks,
-    COUNT(t.TaskId) FILTER (WHERE t.Status <> 'Completed') AS OpenTasks,
-    COUNT(t.TaskId) FILTER (WHERE t.Status = 'Completed') AS CompletedTasks
+    COUNT(t.TaskId) FILTER (WHERE t.Status <> 3) AS OpenTasks,
+    COUNT(t.TaskId) FILTER (WHERE t.Status = 3) AS CompletedTasks
 FROM Projects p
 LEFT JOIN Tasks t ON p.ProjectId = t.ProjectId
 GROUP BY p.ProjectId;
@@ -104,7 +98,7 @@ GROUP BY p.ProjectId;
 
 SELECT *
 FROM Tasks
-WHERE Status <> 'Completed'
+WHERE Status <> 3
 AND DueDate BETWEEN CURRENT_DATE AND CURRENT_DATE + INTERVAL '7 days';
 
 -- Insert new task
@@ -114,8 +108,8 @@ CREATE OR REPLACE FUNCTION InsertTask(
     p_title VARCHAR,
     p_description TEXT,
     p_assigneeId INT,
-    p_status task_status,
-    p_priority task_priority,
+    p_status INT,
+    p_priority INT,
     p_complexity INT,
     p_dueDate DATE
 )
@@ -140,21 +134,21 @@ $$ LANGUAGE plpgsql;
 
 SELECT
     d.FirstName || ' ' || d.LastName AS DeveloperName,
-    COUNT(t.TaskId) FILTER (WHERE t.Status <> 'Completed') AS OpenTasksCount,
+    COUNT(t.TaskId) FILTER (WHERE t.Status <> 3) AS OpenTasksCount,
 
     COALESCE(
         AVG(GREATEST((CompletionDate - DueDate), 0))
-        FILTER (WHERE t.Status = 'Completed'),
+        FILTER (WHERE t.Status = 3),
         0
     ) AS AvgDelayDays,
 
-    MIN(t.DueDate) FILTER (WHERE t.Status <> 'Completed') AS NearestDueDate,
-    MAX(t.DueDate) FILTER (WHERE t.Status <> 'Completed') AS LatestDueDate,
+    MIN(t.DueDate) FILTER (WHERE t.Status <> 3) AS NearestDueDate,
+    MAX(t.DueDate) FILTER (WHERE t.Status <> 3) AS LatestDueDate,
 
-    MAX(t.DueDate) FILTER (WHERE t.Status <> 'Completed')
+    MAX(t.DueDate) FILTER (WHERE t.Status <> 3)
         + COALESCE(
             AVG(GREATEST((CompletionDate - DueDate), 0))
-            FILTER (WHERE t.Status = 'Completed'),
+            FILTER (WHERE t.Status = 3),
             0
         ) * INTERVAL '1 day'
         AS PredictedCompletionDate,
@@ -162,14 +156,14 @@ SELECT
     CASE
         WHEN
             (
-                MAX(t.DueDate) FILTER (WHERE t.Status <> 'Completed')
+                MAX(t.DueDate) FILTER (WHERE t.Status <> 3)
                 + COALESCE(
                     AVG(GREATEST((CompletionDate - DueDate), 0))
-                    FILTER (WHERE t.Status = 'Completed'),
+                    FILTER (WHERE t.Status = 3),
                     0
                 ) * INTERVAL '1 day'
             ) >
-            MAX(t.DueDate) FILTER (WHERE t.Status <> 'Completed')
+            MAX(t.DueDate) FILTER (WHERE t.Status <> 3)
         THEN 1
         ELSE 0
     END AS HighRiskFlag

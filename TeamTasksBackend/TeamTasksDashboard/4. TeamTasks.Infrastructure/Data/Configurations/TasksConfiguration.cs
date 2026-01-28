@@ -22,7 +22,9 @@ namespace _4._TeamTasks.Infrastructure.Data.Configurations
             entity.Property(e => e.Description).HasColumnName("description");
             entity.Property(e => e.Duedate).HasColumnName("duedate");
             entity.Property(e => e.Estimatedcomplexity).HasColumnName("estimatedcomplexity");
+            entity.Property(e => e.Priority).HasColumnName("priority");
             entity.Property(e => e.Projectid).HasColumnName("projectid");
+            entity.Property(e => e.Status).HasColumnName("status");
             entity.Property(e => e.Title)
                 .HasMaxLength(200)
                 .HasColumnName("title");

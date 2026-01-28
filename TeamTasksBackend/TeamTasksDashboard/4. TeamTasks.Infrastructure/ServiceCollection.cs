@@ -22,6 +22,8 @@ namespace _4._TeamTasks.Infrastructure
 
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
             services.AddScoped<IDeveloperRepository, DeveloperRepository>();
+            services.AddScoped<IProjectRepository, ProjectRepository>();
+            services.AddScoped<IProjectTaskRepository, ProjectTaskRepository>();
 
             return services;
         }
