@@ -64,3 +64,46 @@ TeamTasksDashboard
     │
     ├── Dependencias
     └── (Pruebas unitarias / integración)
+
+src/app
+│
+├── core/
+│   ├── services/
+│   │   ├── developers.service.ts
+│   │   ├── projects.service.ts
+│   │   └── dashboard.service.ts
+│   │
+│   └── layout/
+│       ├── layout.component.ts
+│       ├── layout.component.html
+│       └── layout.component.css
+│
+├── shared/
+│   ├── pipes/
+│   │   └── task-status.pipe.ts
+│   │
+│   └── models/
+│       ├── developer.model.ts
+│       ├── project.model.ts
+│       └── task.model.ts
+│
+├── features/
+│   ├── developers/
+│   │   ├── developers.component.ts
+│   │   ├── developers.component.html
+│   │   └── developers.component.css
+│   │
+│   ├── projects/
+│   │   ├── projects.component.ts
+│   │   ├── projects.component.html
+│   │   └── projects.component.css
+│   │
+│   └── metrics/
+│       ├── metrics.component.ts
+│       ├── metrics.component.html
+│       └── metrics.component.css
+│
+├── app.routes.ts
+├── app.component.ts
+├── app.component.html
+└── app.component.css
