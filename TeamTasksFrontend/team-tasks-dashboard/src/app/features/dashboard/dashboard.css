@@ -1,0 +1,16 @@
+.container {
+    display: flex;
+    justify-content: center;
+    /* centra horizontal */
+    align-items: center;
+}
+
+.card {
+    width: 600px;
+    height: 400px;
+}
+
+canvas {
+    width: 100% !important;
+    height: 100% !important;
+}

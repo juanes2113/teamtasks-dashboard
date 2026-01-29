@@ -1,4 +1,15 @@
-import { Component, signal } from '@angular/core';
+import { Component } from '@angular/core';
+import { Layout } from './core/layout/layout/layout';
+
+@Component({
+  selector: 'app-root',
+  standalone: true,
+  imports: [Layout],
+  template: `<app-layout></app-layout>`
+})
+export class App { }
+
+/*import { Component, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 
 @Component({
@@ -9,4 +20,4 @@ import { RouterOutlet } from '@angular/router';
 })
 export class App {
   protected readonly title = signal('team-tasks-dashboard');
-}
+}*/

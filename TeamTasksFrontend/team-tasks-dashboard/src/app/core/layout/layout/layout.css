@@ -1,0 +1,27 @@
+mat-sidenav-container {
+    height: 100vh;
+}
+
+mat-sidenav {
+    border-right: 1px solid #ccc;
+}
+
+mat-divider {
+    border-top-color: rgba(255, 255, 255, 0.3);
+}
+
+.content-divider {
+    margin: 0 50px;
+    border-top-color: rgba(0, 0, 0, 0.20);
+}
+
+.page-title-toolbar {
+    justify-content: center;
+}
+
+.page-title {
+    font-size: 1.6rem;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+}

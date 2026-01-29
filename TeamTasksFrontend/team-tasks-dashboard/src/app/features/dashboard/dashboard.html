@@ -1,1 +1,35 @@
-<p>dashboard works!</p>
+<div class="container">
+    <div class="card p-3 m-4 text-center">
+        <h5 class="mb-3">Carga de trabajo por desarrollador</h5>
+        <canvas id="workloadChart"></canvas>
+    </div>
+</div>
+<div class="table-responsive mt-4">
+    <table class="table table-rounded table-striped table-hover border gy-7 gs-7" aria-label="Tabla solicitudes">
+        <thead>
+            <tr class="fw-bolder fs-6 text-gray-800 border-bottom border-gray-200 text-center">
+                <th>NOMBRE</th>
+                <th>TAREAS ABIERTAS</th>
+                <th>RETRASO</th>
+                <th>VENCIMIENTO CERCANO</th>
+                <th>VENCIMIENTO RECIENTE</th>
+                <th>FINALIZACIÓN ESTIMADA</th>
+                <th>RIESGO</th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (developer of developers; track developer) {
+            <tr class="text-center">
+                <td>{{ developer.developerName }}</td>
+                <td>{{ developer.openTasksCount }}</td>
+                <td>{{ developer.avgDelayDays }}</td>
+                <td>{{ developer.nearestDueDate }}</td>
+                <td>{{ developer.latestDueDate }}</td>
+                <td>{{ developer.predictedCompletionDate }}</td>
+                <td class="text-center">{{ developer.highRiskFlag ? 'Activo' : 'Inactivo'}}
+                </td>
+            </tr>
+            }
+        </tbody>
+    </table>
+</div>

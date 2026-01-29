@@ -1,1 +1,90 @@
-<p>projects works!</p>
+<div class="d-flex justify-content-end p-4 pb-0">
+    <button mat-raised-button color="primary" (click)="openModal(projectModal, 0)">
+        <mat-icon>add</mat-icon>
+        Crear proyecto
+    </button>
+</div>
+<div class="row g-4 p-4">
+    @for (project of projects; track project.projectId) {
+    <div class="col-md-4">
+        <div class="card project-card h-100" role="button" (click)="goToTasks(project.projectId)">
+            <div class="card-body position-relative">
+                <button mat-icon-button color="warn" class="delete-btn" title="Eliminar proyecto"
+                    (click)="deleteProject(project); $event.stopPropagation()">
+                    <mat-icon style="font-size:18px">delete</mat-icon>
+                </button>
+                <h5 class="card-title mb-1">{{ project.name }}</h5>
+                <small class="text-muted">
+                    {{ project.clientName }} · {{ project.status }}
+                </small>
+                <hr>
+                <div class="mb-3">
+                    <div class="d-flex justify-content-between">
+                        <span>Total tareas</span>
+                        <span>{{ project.totalTasks }}</span>
+                    </div>
+                    <div class="progress">
+                        <div class="progress-bar bg-secondary" style="width: 100%">
+                        </div>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <div class="d-flex justify-content-between">
+                        <span>Abiertas</span>
+                        <span>{{ project.openTasks }}</span>
+                    </div>
+                    <div class="progress">
+                        <div class="progress-bar bg-warning"
+                            [style.width.%]="(project.openTasks / project.totalTasks) * 100">
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <div class="d-flex justify-content-between">
+                        <span>Completadas</span>
+                        <span>{{ project.completedTasks }}</span>
+                    </div>
+                    <div class="progress">
+                        <div class="progress-bar bg-success"
+                            [style.width.%]="(project.completedTasks / project.totalTasks) * 100">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    }
+</div>
+
+<ng-template #projectModal let-modal>
+    <div class="modal-header">
+        <h5 class="modal-title">{{ titleForm }}</h5>
+        <button type="button" class="btn-close" (click)="modal.dismiss()"></button>
+    </div>
+    <div class="modal-body">
+        <form [formGroup]="formProject">
+            <div class="mb-3">
+                <label class="form-label">Nombre</label>
+                <input class="form-control" formControlName="name">
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Cliente</label>
+                <input class="form-control" formControlName="clientname">
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Fecha de inicio</label>
+                <input class="form-control" formControlName="startdate" type="date">
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Fecha de fin</label>
+                <input class="form-control" formControlName="enddate" type="date">
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-secondary" (click)="modal.close()">Cancelar</button>
+        <button class="btn btn-primary" (click)="submit()">
+            {{ actionBtn }}
+        </button>
+    </div>
+</ng-template>

@@ -1,1 +1,31 @@
-<p>layout works!</p>
+<mat-sidenav-container class="h-screen">
+    <mat-sidenav mode="side" opened [style.width.px]="250" style="background-color:#1A237E; color:white">
+        <mat-toolbar style="background-color:#1A237E; color:white; justify-content:center">Team Tasks</mat-toolbar>
+        <mat-divider></mat-divider>
+        <mat-nav-list>
+            <a mat-list-item routerLink="/developers" routerLinkActive="active">
+                <mat-icon style="color:white">group</mat-icon>
+                <span style="color:white; margin-left: 10px;">Desarrolladores</span>
+            </a>
+            <a mat-list-item routerLink="/projects" routerLinkActive="active">
+                <mat-icon style="color:white">folder</mat-icon>
+                <span style="color:white; margin-left: 10px;">Proyectos</span>
+            </a>
+            <a mat-list-item routerLink="/dashboard" routerLinkActive="active">
+                <mat-icon style="color:white">dashboard</mat-icon>
+                <span style="color:white; margin-left: 10px;">Métricas</span>
+            </a>
+        </mat-nav-list>
+    </mat-sidenav>
+    <mat-sidenav-content>
+        <mat-toolbar color="primary" class="page-title-toolbar">
+            <span class="page-title">
+                {{ currentTitle }}
+            </span>
+        </mat-toolbar>
+        <mat-divider class="content-divider"></mat-divider>
+        <div class="p-6">
+            <router-outlet></router-outlet>
+        </div>
+    </mat-sidenav-content>
+</mat-sidenav-container>
