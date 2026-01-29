@@ -116,9 +116,3 @@ http://localhost:4200
 - Dashboard de métricas
 
 ---
-
-## 🧪 Notas finales
-
-Proyecto desarrollado como prueba técnica siguiendo buenas prácticas y arquitectura limpia.
-
-└── app.component.css
