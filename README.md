@@ -1,109 +1,124 @@
 ﻿# teamtasks-dashboard
 
-Technical test
 
-dotnet ef dbcontext scaffold "Host=localhost;Port=5433;Database=TeamTasks;Username=postgres;Password=cancelado88" Npgsql.EntityFrameworkCore.PostgreSQL --project "4. TeamTasks.Infrastructure/4. TeamTasks.Infrastructure.csproj" --startup-project "1. TeamTasks.API/1. TeamTasks.API.csproj" --context TeamTasksDbContext --output-dir Entities --no-onconfiguring --force
+# 🧩 TeamTasks Dashboard – Technical Test
 
-"DefaultConnection": "Host=localhost;Port=5433;Database=TeamTasks;Username=tu_username;Password=tu_password"
-"DefaultConnection": "Host=localhost;Port=5433;Database=TeamTasks;Username=postgres;Password=cancelado88"
+Este repositorio contiene una solución **full stack** para la gestión de proyectos, tareas y desarrolladores, construida como prueba técnica.
 
-TeamTasksDashboard
-│
-├── 1. TeamTasks.API
-│   │
-│   ├── Connected Services
-│   ├── Dependencias
-│   ├── Properties
-│   │
-│   ├── Controllers
-│   │   └── (Controllers de la API REST)
-│   │
-│   ├── TeamTasks.API.http
-│   ├── appsettings.json
-│   ├── Program.cs
-│   └── WeatherForecast.cs
-│
-├── 2. TeamTasks.Application
-│   │
-│   ├── Dependencias
-│   │
-│   ├── Interfaces
-│   │   └── (Contratos de servicios / casos de uso)
-│   │
-│   ├── Services
-│   │   └── (Lógica de negocio / casos de uso)
-│   │
-│   └── ServiceCollection.cs
-│
-├── 3. TeamTasks.Domain
-│   │
-│   ├── Dependencias
-│   │
-│   ├── Enums
-│   │   └── (Estados, tipos, prioridades, etc.)
-│   │
-│   ├── Interfaces
-│   │   └── (Contratos de repositorios)
-│   │
-│   └── Models
-│       └── (Entidades de dominio: Project, Task, Developer, etc.)
-│
-├── 4. TeamTasks.Infrastructure
-│   │
-│   ├── Dependencias
-│   │
-│   ├── Data
-│   │   └── TeamTasksDbContext.cs
-│   │
-│   ├── Repositories
-│   │   └── (Implementaciones de repositorios)
-│   │
-│   └── ServiceCollection.cs
-│
-└── 5. TeamTasks.Test
-    │
-    ├── Dependencias
-    └── (Pruebas unitarias / integración)
+---
 
-src/app
-│
-├── core/
-│   ├── services/
-│   │   ├── developers.service.ts
-│   │   ├── projects.service.ts
-│   │   └── dashboard.service.ts
-│   │
-│   └── layout/
-│       ├── layout.component.ts
-│       ├── layout.component.html
-│       └── layout.component.css
-│
-├── shared/
-│   ├── pipes/
-│   │   └── task-status.pipe.ts
-│   │
-│   └── models/
-│       ├── developer.model.ts
-│       ├── project.model.ts
-│       └── task.model.ts
-│
-├── features/
-│   ├── developers/
-│   │   ├── developers.component.ts
-│   │   ├── developers.component.html
-│   │   └── developers.component.css
-│   │
-│   ├── projects/
-│   │   ├── projects.component.ts
-│   │   ├── projects.component.html
-│   │   └── projects.component.css
-│   │
-│   └── metrics/
-│       ├── metrics.component.ts
-│       ├── metrics.component.html
-│       └── metrics.component.css
-│
-├── app.routes.ts
-├── app.component.ts
-├── app.component.html
+## 📦 1. Base de datos
+
+### 🛢️ Motor
+Se utilizó **PostgreSQL** como motor de base de datos.
+
+### 📄 Script de creación
+
+Ejemplo de script incluido en `DBSetup_TeamTasks.sql`:
+
+```sql
+CREATE DATABASE "TeamTasks";
+
+CREATE TABLE Developers (
+    DeveloperId SERIAL PRIMARY KEY,
+    FirstName VARCHAR(100) NOT NULL,
+    LastName VARCHAR(100) NOT NULL,
+    Email VARCHAR(150) NOT NULL UNIQUE,
+    IsActive BOOLEAN NOT NULL DEFAULT TRUE,
+    CreatedAt TIMESTAMP NOT NULL DEFAULT NOW()
+);
+```
+
+---
+
+## 🧠 2. Backend (.NET)
+
+### ⚙️ Tecnología
+- .NET 8
+- ASP.NET Core Web API
+- Entity Framework Core
+- PostgreSQL
+
+### 🧱 Arquitectura
+Arquitectura en capas:
+
+- API
+- Application
+- Domain
+- Infrastructure
+- Test
+
+### 🔐 Cadena de conexión
+
+```json
+"ConnectionStrings": {
+  "DefaultConnection": "Host=localhost;Port=5433;Database=TeamTasks;Username=postgres;Password=cancelado88"
+}
+```
+
+> ⚠️ Esta información se comparte solo para efectos de la prueba técnica.
+
+### ▶️ Ejecutar backend
+
+```bash
+dotnet run --project "1. TeamTasks.API"
+```
+
+---
+
+## 🎨 3. Frontend (Angular)
+
+### ⚛️ Tecnología
+- Angular 20
+- Standalone Components
+- Angular Material
+- Bootstrap
+
+### 📌 Versiones
+
+```text
+Angular CLI: 20.3.2
+Node: 22.18.0
+npm: 10.9.3
+```
+
+### ⚙️ Configuración
+
+```ts
+export const environment = {
+  production: false,
+  apiUrl: 'https://localhost:7287/api'
+};
+```
+
+### 📦 Instalación
+
+```bash
+npm install
+```
+
+### ▶️ Ejecutar
+
+```bash
+ng serve
+```
+
+Abrir:
+http://localhost:4200
+
+---
+
+## 🚀 Funcionalidades
+
+- Gestión de desarrolladores
+- Gestión de proyectos
+- Gestión de tareas
+- Dashboard de métricas
+
+---
+
+## 🧪 Notas finales
+
+Proyecto desarrollado como prueba técnica siguiendo buenas prácticas y arquitectura limpia.
+
 └── app.component.css
